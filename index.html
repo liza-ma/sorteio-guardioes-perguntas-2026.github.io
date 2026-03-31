@@ -23,9 +23,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html {
-    overflow-y: scroll;
-  }
 
   body {
     font-family: 'Figtree', sans-serif;
@@ -47,7 +44,7 @@
 
   /* TOP BAR */
 .topbar {
-    background: #FFFFFF;
+    background: rgb(255, 255, 255);
     border-bottom: 2px solid var(--border); /* Linha levemente mais grossa */
     padding: 18px 32px; /* Aumentei o espaçamento interno */
     display: flex;
@@ -75,12 +72,11 @@
 
   /* LAYOUT */
   .app {
-    max-width: 1200px;
+    max-width: 1200px; /* Alarguei um pouco para caber melhor na proporção do projetor */
     margin: 0 auto;
     padding: 32px 24px 80px;
     position: relative;
     z-index: 1;
-    overflow-x: hidden;
   }
 
   /* HEADER */
@@ -286,7 +282,7 @@
     border: 2px solid var(--border); /* De 1.5px para 2px */
     border-radius: 24px;
     padding: 48px 40px;
-    min-height: 400px;
+    min-height: 260px;
     display: flex;
     flex-direction: column;
     align-items: center;
