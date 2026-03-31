@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guardiões do Clima 2026 — Sorteio</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --red: #F3123C;
+    --red-dark: #c80e30;
+    --red-glow: rgba(243,18,60,0.15);
+    --dark: #F4F3F8;
+    --dark2: #FFFFFF;
+    --dark3: #EAE8F0; 
+    --border: rgba(24,23,31,0.12); /* Aumentei um pouco a opacidade da borda para a projeção */
+    --text: #18171F;
+    --muted: #525060; /* Escureci um pouco o muted para dar mais leitura no projetor */
+    --gold: #D99E00; 
+    --gold-glow: rgba(217,158,0,0.15);
+    --green: #00A859;
+    --green-glow: rgba(0,168,89,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Figtree', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* TOP BAR */
+.topbar {
+    background: rgb(255, 255, 255);
+    border-bottom: 2px solid var(--border); /* Linha levemente mais grossa */
+    padding: 18px 32px; /* Aumentei o espaçamento interno */
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  }
+
+  .topbar-logo svg { height: 26px; display: block; }
+
+  .topbar-divider { width: 1px; height: 22px; background: var(--border); }
+
+  .topbar-title {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700; /* De 600 para 700 */
+    font-size: 0.85rem; /* De 0.8rem para 0.85rem */
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #18171F;
+  }
+
+  /* LAYOUT */
+  .app {
+    max-width: 1200px; /* Alarguei um pouco para caber melhor na proporção do projetor */
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .page-header h1 {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900; /* De 800 para 900: peso máximo para títulos projetados */
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  .page-header h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .page-header p {
+    font-size: 0.95rem; /* De 0.82rem para 0.95rem */
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 600; /* Adicionado peso */
+  }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr; /* Alarguei a barra lateral para acomodar os textos maiores */
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* PLAYERS SIDEBAR */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sidebar-title {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.75rem; /* De 0.65rem para 0.75rem */
+    font-weight: 800; /* De 700 para 800 */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .player-card {
+    background: var(--dark2);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* Sombra sutil no card */
+  }
+
+  .player-card:hover { 
+    border-color: rgba(24,23,31,0.25); /* Bordas escuras no hover em vez de brancas */
+    transform: translateX(4px); 
+  }
+
+  .player-card.selected {
+    border-color: var(--red);
+    background: rgba(243,18,60,0.04);
+    box-shadow: 0 4px 20px var(--red-glow);
+  }
+
+  .player-avatar {
+    width: 58px; 
+    height: 58px; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    overflow: hidden;
+    background: #f8f8fc; /* Fundo neutro caso a imagem falhe */
+  }
+
+  .player-card.selected .player-avatar { border-color: var(--red); }
+
+  .player-info { flex: 1; min-width: 0; }
+  .player-name {
+    font-weight: 800; /* De 500 para 800 */
+    font-size: 0.95rem; /* De 0.88rem para 0.95rem */
+    color: var(--text);
+  }
+
+  .player-pts {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600; /* De 700 para 600 (ajuste de hierarquia) */
+    font-size: 0.8rem; /* De 0.72rem para 0.8rem */
+    color: var(--muted);
+    margin-top: 1px;
+    transition: color 0.3s;
+  }
+
+  .player-card.selected .player-pts { color: var(--red); }
+
+  .player-score-badge {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900; /* De 800 para 900 */
+    font-size: 1.3rem; /* De 1.1rem para 1.3rem */
+    color: var(--green);
+    min-width: 28px;
+    text-align: right;
+    transition: all 0.3s;
+  }
+
+  .player-score-badge.bump {
+    animation: scoreBump 0.4s ease;
+  }
+
+  @keyframes scoreBump {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); color: var(--green); }
+    100% { transform: scale(1); }
+  }
+
+  /* MAIN CONTENT */
+  .content { display: flex; flex-direction: column; gap: 24px; }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--dark2);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-val {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900; /* De 800 para 900 */
+    font-size: 2.2rem; /* De 1.8rem para 2.2rem */
+    line-height: 1;
+  }
+
+  .stat-val.red { color: var(--red); }
+  .stat-val.green { color: var(--green); }
+  .stat-val.gold { color: var(--gold); }
+
+  .stat-label {
+    font-size: 0.7rem; /* De 0.62rem para 0.7rem */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 700;
+  }
+
+  .progress-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem; /* De 0.68rem para 0.75rem */
+    color: var(--muted);
+    font-weight: 700; /* Negrito adicionado */
+    letter-spacing: 0.5px;
+  }
+
+  .progress-bar {
+    height: 8px; /* De 6px para 8px */
+    background: var(--dark3);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--red);
+    border-radius: 20px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* RAFFLE CARD */
+  .raffle-card {
+    background: var(--dark2);
+    border: 2px solid var(--border); /* De 1.5px para 2px */
+    border-radius: 24px;
+    padding: 48px 40px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s, box-shadow 0.4s;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.02);
+  }
+
+  .raffle-card.has-question {
+    border-color: rgba(243,18,60,0.3);
+    box-shadow: 0 10px 30px rgba(243,18,60,0.05);
+  }
+
+  .waiting-state { text-align: center; }
+  .waiting-icon { font-size: 4rem; margin-bottom: 12px; opacity: 0.3; }
+  .waiting-text { font-size: 1.1rem; color: var(--muted); font-weight: 600; }
+
+  .question-state { width: 100%; }
+
+  .q-label {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.75rem; /* De 0.6rem para 0.75rem */
+    font-weight: 800; /* De 700 para 800 */
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .points-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(217,158,0,0.1); /* Usando a var real gold */
+    border: 1px solid rgba(217,158,0,0.25);
+    color: var(--gold);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem; /* De 0.72rem para 0.8rem */
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .q-text {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 800; /* De 700 para 800 */
+    font-size: clamp(1.6rem, 3.5vw, 2.3rem); /* Aumentei bastante para o projetor */
+    line-height: 1.3;
+    margin-bottom: 32px;
+    color: var(--text);
+  }
+
+  .raffle-card.spinning .q-text {
+    animation: flicker 0.1s infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ANSWER BUTTON */
+  .answer-btn {
+    width: 100%;
+    max-width: 520px;
+    padding: 18px 24px;
+    background: var(--dark3);
+    border: 2px dashed rgba(24,23,31,0.15); /* Bordas escuras em vez de brancas */
+    border-radius: 14px;
+    color: var(--muted);
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.95rem; /* De 0.85rem para 0.95rem */
+    font-weight: 700; /* De 500 para 700 */
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+  }
+
+  .answer-btn:hover:not(.revealed) {
+    border-color: var(--red);
+    color: var(--red);
+    background: rgba(243,18,60,0.02);
+  }
+
+  .answer-btn.revealed {
+    border-style: solid;
+    border-color: rgba(0,168,89,0.3);
+    background: #F0FBF5; /* Verde bem sutil de fundo */
+    cursor: default;
+  }
+
+  .answer-text-inner {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem; /* De 1.05rem para 1.1rem */
+    color: var(--green);
+    line-height: 1.4;
+  }
+
+  /* SCORE ACTIONS */
+  .score-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .score-actions .hint {
+    font-size: 0.9rem; /* De 0.75rem para 0.9rem */
+    color: var(--muted);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .score-actions-wrap { text-align: center; }
+
+  .btn-correct {
+    background: #E6F7ED; /* Fundo sólido para garantir leitura */
+    border: 1.5px solid rgba(0,168,89,0.4);
+    color: var(--green);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem; /* De 0.78rem para 0.9rem */
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-correct:hover {
+    background: #D4F2E1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--green-glow);
+  }
+
+  .btn-skip {
+    background: #F4F3F8;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700; /* De 500 para 700 */
+    font-size: 0.9rem; /* De 0.78rem para 0.9rem */
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-skip:hover { border-color: rgba(24,23,31,0.25); color: var(--text); }
+
+  /* SELECTED PLAYER INDICATOR */
+  .selected-player-indicator {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 0.95rem; /* De 0.78rem para 0.95rem */
+    color: var(--muted);
+    font-weight: 600;
+    min-height: 22px;
+    transition: all 0.2s;
+  }
+
+  .selected-player-indicator strong { color: var(--red); font-weight: 800; }
+
+  /* DRAW BUTTON */
+  .draw-btn-wrap { text-align: center; }
+
+  .btn-draw {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 800; /* De 700 para 800 */
+    font-size: 1.1rem; /* De 0.9rem para 1.1rem */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 18px 44px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px var(--red-glow);
+  }
+
+  .btn-draw:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--red-glow);
+  }
+
+  .btn-draw:active { transform: translateY(0); }
+  .btn-draw:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-reset {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700; /* De 500 para 700 */
+    font-size: 0.9rem; /* De 0.8rem para 0.9rem */
+    padding: 16px 28px;
+    border-radius: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.2s;
+  }
+
+  .btn-reset:hover { border-color: rgba(24,23,31,0.25); color: var(--text); }
+
+  /* FINISH STATE */
+  .finish-state {
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+  }
+
+  .finish-state h2 {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .finish-state .winner-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--gold);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--text); /* Toast escuro para contrastar no fundo claro */
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--dark2);
+    z-index: 999;
+    opacity: 0;
+    transition: all 0.35s ease;
+    pointer-events: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* POINT ANIMATION */
+  .point-fly {
+    position: fixed;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--gold);
+    pointer-events: none;
+    z-index: 999;
+    animation: flyUp 0.9s ease forwards;
+  }
+
+  @keyframes flyUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.4); }
+  }
+
+  @media (max-width: 720px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .sidebar { flex-direction: row; flex-wrap: wrap; }
+    .player-card { flex: 1; min-width: calc(50% - 6px); }
+    .stats-bar { flex-wrap: wrap; gap: 16px; }
+    .raffle-card { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <svg viewBox="0 0 145 28" width="120" height="24">
+    <g fill="none" fill-rule="evenodd">
+      <path d="M138.731 11.402c0-.614.593-.933 1.322-.933.635 0 1.15.246 1.514.677a.432.432 0 0 0 .533.106l1.742-.93a.434.434 0 0 0 .137-.65c-.926-1.186-2.329-1.82-3.926-1.82-2.348 0-4.332 1.297-4.332 3.618 0 4.007 5.883 3.096 5.883 4.758 0 .66-.638.978-1.573.978-.911 0-1.584-.35-1.982-.967a.43.43 0 0 0-.564-.15l-1.8.961a.437.437 0 0 0-.162.615c.893 1.429 2.459 2.205 4.508 2.205 2.44 0 4.584-1.183 4.584-3.642 0-4.189-5.884-3.141-5.884-4.826M130.237 19.494h-1.294a.863.863 0 0 1-.863-.861V14.01a5.84 5.84 0 0 1 5.846-5.834h.001c.474 0 .859.383.859.857v1.3a.858.858 0 0 1-.859.858h-.002a2.822 2.822 0 0 0-2.824 2.82v4.62a.863.863 0 0 1-.864.862M120.471 17.002c-1.733 0-3.078-1.297-3.078-3.141s1.345-3.141 3.078-3.141c1.756 0 3.102 1.297 3.102 3.14 0 1.845-1.346 3.142-3.102 3.142m0-9.15c-3.353 0-6.02 2.617-6.02 6.009 0 3.391 2.667 6.01 6.02 6.01 3.353 0 6.043-2.619 6.043-6.01 0-3.392-2.69-6.01-6.043-6.01M110.009 4.495h-1.216a.862.862 0 0 0-.863.862V15.727c0 2.863 1.206 4.105 4.709 3.895a.866.866 0 0 0 .81-.862v-.98a.865.865 0 0 0-.876-.86c-1.117.007-1.701-.197-1.701-1.193v-4.734h1.714a.862.862 0 0 0 .863-.862v-1.1a.863.863 0 0 0-.863-.86h-1.714V5.356a.863.863 0 0 0-.863-.862M100.26 17.002c-1.733 0-3.078-1.297-3.078-3.141s1.345-3.141 3.078-3.141c1.756 0 3.102 1.297 3.102 3.14 0 1.845-1.346 3.142-3.102 3.142m0-9.15c-3.353 0-6.02 2.617-6.02 6.009 0 3.391 2.667 6.01 6.02 6.01 3.353 0 6.043-2.619 6.043-6.01 0-3.392-2.69-6.01-6.043-6.01M88.383 7.867a4.907 4.907 0 0 0-3.81 1.365 4.908 4.908 0 0 0-3.81-1.365c-2.585.205-4.525 2.465-4.525 5.054v5.914c0 .476.387.861.863.861h1.295a.862.862 0 0 0 .863-.861V12.85c0-.99.724-1.877 1.712-1.974a1.903 1.903 0 0 1 2.092 1.89v6.069c0 .476.385.861.863.861h1.294a.862.862 0 0 0 .864-.861V12.85c0-.99.724-1.878 1.711-1.974 1.134-.11 2.091.78 2.091 1.89v6.069c0 .476.387.861.863.861h1.295a.862.862 0 0 0 .863-.861V12.92c0-2.589-1.94-4.85-4.524-5.054M68.94 16.915c-1.73 0-3.072-1.293-3.077-3.132v-.018c.005-1.839 1.348-3.132 3.078-3.132 1.756 0 3.101 1.298 3.101 3.141 0 1.844-1.345 3.141-3.101 3.141m0-9.15c-1.13 0-2.18.303-3.078.828V4.479A.862.862 0 0 0 65 3.618h-1.216a.862.862 0 0 0-.863.861v9.334h.002c.02 3.372 2.68 5.97 6.018 5.97 3.352 0 6.043-2.617 6.043-6.009 0-3.392-2.69-6.009-6.043-6.009M55.539 10.546c1.228 0 2.254.636 2.76 1.65H52.8c.505-1.014 1.526-1.65 2.739-1.65Zm3.134 5.331c-.318-.17-.72-.138-.98.112-.55.529-1.3.84-2.154.84-1.237 0-2.274-.663-2.767-1.711a.434.434 0 0 1 .387-.626h7.616a.808.808 0 0 0 .807-.805c0-3.391-2.69-6.009-6.043-6.009s-6.02 2.618-6.02 6.01 2.667 6.01 6.02 6.01a6.03 6.03 0 0 0 4.448-1.917c.379-.408.25-1.068-.24-1.33l-1.074-.574ZM45.197 14.783c0 1.11-.958 2-2.092 1.89-.988-.097-1.711-.984-1.711-1.975V8.713a.863.863 0 0 0-.863-.861h-1.295a.862.862 0 0 0-.863.861v5.985c0 .991-.724 1.878-1.712 1.974a1.903 1.903 0 0 1-2.092-1.889v-6.07a.862.862 0 0 0-.863-.861h-1.295a.863.863 0 0 0-.863.861v5.915c0 2.588 1.94 4.849 4.525 5.053a4.908 4.908 0 0 0 3.81-1.364 4.907 4.907 0 0 0 3.81 1.364c2.584-.204 4.525-2.465 4.525-5.053V8.713a.863.863 0 0 0-.863-.861H46.06a.863.863 0 0 0-.863.861v6.07Z" fill="#18171F"></path>
+      <path d="M13.891 0C6.22 0 .001 6.208.001 13.866c0 7.658 6.219 13.866 13.89 13.866 7.672 0 13.89-6.208 13.89-13.866C27.782 6.208 21.564 0 13.892 0Z" fill="#F51344"></path>
+      <path d="M21.656 18.476c0 .655-.548 1.181-1.211 1.146-.622-.032-1.088-.59-1.088-1.21v-2.536a.862.862 0 0 0-.863-.862h-2.59a.862.862 0 0 0-.863.862v3.462c0 .655-.549 1.18-1.212 1.146-.621-.033-1.087-.59-1.087-1.211v-3.397a.863.863 0 0 0-.864-.862H9.29a.862.862 0 0 0-.863.862v2.6c0 .655-.549 1.181-1.212 1.146-.622-.032-1.088-.59-1.088-1.21V9.255c0-.654.548-1.181 1.211-1.146.623.032 1.09.59 1.09 1.211v2.535c0 .476.385.862.862.862h2.59a.863.863 0 0 0 .863-.862V8.394c0-.654.548-1.18 1.21-1.146.623.032 1.09.59 1.09 1.211v3.397c0 .476.385.862.862.862h2.59a.862.862 0 0 0 .863-.862V9.321c0-.622.466-1.179 1.088-1.211a1.149 1.149 0 0 1 1.211 1.146v9.22Z" fill="#FFF"></path>
+    </g>
+  </svg>
+  <div class="topbar-divider"></div>
+  <div class="topbar-title">Guardiões do Clima 2026</div>
+</div>
+
+<div class="app">
+  <div class="page-header">
+    <h1>Sorteio de <em>Perguntas</em></h1>
+  </div>
+
+  <div class="main-grid">
+
+    <!-- SIDEBAR: PLAYERS -->
+    <div class="sidebar">
+      <div class="sidebar-title">Participantes</div>
+      <div id="players-list"></div>
+    </div>
+
+    <!-- CONTENT: RAFFLE -->
+    <div class="content">
+
+      <!-- STATS -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-val red" id="stat-total">10</div>
+          <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val green" id="stat-drawn">0</div>
+          <div class="stat-label">Sorteadas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="stat-remaining">10</div>
+          <div class="stat-label">Restantes</div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>Progresso</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RAFFLE CARD -->
+      <div class="raffle-card" id="raffle-card">
+        <div class="glow-orb"></div>
+        <div class="waiting-state" id="waiting-state">
+          <div class="waiting-icon">🎲</div>
+          <div class="waiting-text">Selecione um participante e clique em Sortear</div>
+        </div>
+        <div class="question-state" id="question-state" style="display:none">
+          <div class="q-label">Pergunta Sorteada</div>
+          <div class="points-badge" id="points-badge">⭐ 1 PONTO</div>
+          <div class="q-text" id="q-text"></div>
+          <button class="answer-btn" id="answer-btn" onclick="revealAnswer()">
+            🔒 Clique para revelar a resposta
+          </button>
+        </div>
+      </div>
+
+      <!-- SCORE ACTIONS -->
+      <div class="score-actions-wrap" id="score-actions-wrap" style="display:none">
+        <div class="score-actions hint" id="score-hint">Participante respondeu corretamente?</div>
+        <div class="score-actions">
+          <button class="btn-correct" id="btn-correct" onclick="markCorrect()">✓ Acertou — Pontuar</button>
+          <button class="btn-skip" onclick="skipQuestion()">✕ Errou / Pular</button>
+        </div>
+      </div>
+
+      <!-- SELECTED INDICATOR -->
+      <div class="selected-player-indicator" id="player-indicator">Nenhum participante selecionado</div>
+
+      <!-- DRAW BUTTON -->
+      <div class="draw-btn-wrap">
+        <button class="btn-draw" id="btn-draw" onclick="drawQuestion()">🎲 Sortear Pergunta</button>
+        <button class="btn-reset" onclick="resetAll()">↺ Reiniciar</button>
+      </div>
+
+      <!-- FINISH -->
+      <div class="finish-state" id="finish-state">
+        <h2>🏆 Todas as perguntas foram sorteadas!</h2>
+        <div class="winner-row" id="winner-row"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  PERGUNTAS — edite aqui para controlar o conteúdo
+// ═══════════════════════════════════════════════════
+const QUESTIONS = [
+  {
+    question: "Qual é o novo comportamento corporativo?",
+    answer: "Disciplina",
+    points: 1
+  },
+  {
+    question: "O que é a Pesquisa Pulso de Clima que ocorre em outubro?",
+    answer: "Pesquisa intermediária com questionário enxuto, para calibrar a motivação dos climas, antecedente a pesquisa oficial que ocorre em abril/26",
+    points: 1
+  },
+  {
+    question: "O que é a agenda de Catch Up",
+    answer: "Agenda que ocorre com a CarGroup para alinhamento e atualizações de informações importantes e discutir assuntos estratégicos do grupo.",
+    points: 1
+  },
+  {
+    question: "Cite um comportamento que não toleramos como empresa",
+    answer: "Falta de empatia, conformismo, pouca ousadia e iniciativa, individualismo, falta de transparência, falta de comprometimento",
+    points: 1
+  },
+  {
+    question: "Qual é o programa de incentivo educacional que temos todo FY?",
+    answer: "Flexlearning",
+    points: 1
+  },
+  {
+    question: "O que é o Helpmotors?",
+    answer: "Ferramenta de IA de suporte virtual para os colaboradores.",
+    points: 1
+  },
+  {
+    question: "No vender temos as modalidades de planos :Premium, Plus e Economic categorize do mais adotado para o menos adotado no ano de 2025.",
+    answer: "1- Premium, 2 – Plus 3- Economic ",
+    points: 1
+  },
+  {
+    question: "Qual é o Genie na Webmotors?",
+    answer: "Inteligência Artificial do Databricks que reporta dados estratégicos por linguagem natural",
+    points: 1
+  },
+  {
+    question: "Qual foi o NPS (satisfação com o curso) da universidade Webmotors em fevereiro de 2026",
+    answer: "98",
+    points: 1
+  },
+  {
+    question: "Todos os ________ te levam a Webmotors",
+    answer: "Caminhos",
+    points: 1
+  },
+  {
+    question: "Quais são os tipos de cobrança dos produtos PJ na Webmotors?",
+    answer: "Preço fixo e pró-rata",
+    points: 1
+  },
+  {
+    question: "Qual veículo mais anunciado na Webmotors?",
+    answer: "CHEVROLET ONIX",
+    points: 1
+  },
+  {
+    question: "Quais são os 4 pilares da estratégia Webmotors?",
+    answer: "Fortalecer nosso core, expandir nossos marketplaces, diversificar e crescer, excelência operacional.",
+    points: 1
+  }
+  
+];
+
+// ═══════════════════════════════════════════════════
+//  PARTICIPANTES — edite aqui
+// ═══════════════════════════════════════════════════
+
+const PLAYERS_CONFIG = [
+  { name: "SENNA",      color: "#e85d8a", bg: "rgba(232,93,138,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-senna?fmt=png-alpha&hei=519&wid=489" },
+  { name: "VETTEL",     color: "#5d9ee8", bg: "rgba(93,158,232,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-vettel?fmt=png-alpha&hei=636&wid=836" },
+  { name: "LAUDA",      color: "#e8a25d", bg: "rgba(232,162,93,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-lauda?fmt=png-alpha&hei=232&wid=233" },
+  { name: "PROST",      color: "#5de89e", bg: "rgba(93,232,158,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-prost?fmt=png-alpha&hei=361&wid=418" },
+  { name: "HAMILTON",   color: "#c45de8", bg: "rgba(196,93,232,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-hamilton?fmt=png-alpha&hei=485&wid=435" },
+  { name: "VERSTAPPEN", color: "#e8d15d", bg: "rgba(232,209,93,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-verstappen?fmt=png-alpha&hei=552&wid=552" },
+  { name: "NORIS",      color: "#5dd4e8", bg: "rgba(93,212,232,0.15)", avatar: "https://s7d1.scene7.com/is/image/Targetwebmotors/casa-noris?fmt=png-alpha&hei=474&wid=431" }
+];
+
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+let players = PLAYERS_CONFIG.map((p, i) => ({ ...p, id: i, score: 0 }));
+let drawnIds = new Set();
+let selectedPlayer = null;
+let currentQuestion = null;
+let spinning = false;
+let answerRevealed = false;
+
+// ═══════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════
+function renderPlayers() {
+  const list = document.getElementById('players-list');
+  list.innerHTML = players.map(p => {
+    return `
+      <div class="player-card ${selectedPlayer === p.id ? 'selected' : ''}" id="player-card-${p.id}">
+        
+        <div class="player-avatar" style="background:${p.bg}; border-color:${selectedPlayer === p.id ? p.color : 'transparent'};" onclick="selectPlayer(${p.id})">
+          <img src="${p.avatar}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: contain; padding: 4px;">
+        </div>
+        <div class="player-info" onclick="selectPlayer(${p.id})">
+          <div class="player-name">${p.name}</div>
+          <div class="player-pts">${p.score} pt${p.score !== 1 ? 's' : ''}</div>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 4px; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); z-index: 10;">
+          
+          <button onclick="event.stopPropagation(); manuallyAdjustScore(${p.id}, -1)" style="border: none; background: #e0e0e0; color: #333; border-radius: 4px; width: 24px; height: 24px; cursor: pointer; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center;">-</button>
+          
+          <div class="player-score-badge" id="badge-${p.id}" style="position: static; transform: none;">${p.score}</div>
+          
+          <button onclick="event.stopPropagation(); manuallyAdjustScore(${p.id}, 1)" style="border: none; background: #e0e0e0; color: #333; border-radius: 4px; width: 24px; height: 24px; cursor: pointer; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center;">+</button>
+          
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+function manuallyAdjustScore(playerId, value) {
+  const p = players.find(x => x.id === playerId);
+  if (!p) return;
+
+  // Atualiza a pontuação (não deixa ficar menor que 0)
+  p.score = Math.max(0, p.score + value);
+
+  // 1. Atualiza apenas o número do badge na tela (evita recarregar o HTML todo de uma vez)
+  const badge = document.getElementById(`badge-${p.id}`);
+  if (badge) {
+    badge.textContent = p.score;
+    badge.classList.remove('bump');
+    void badge.offsetWidth; // Truque para reiniciar animação CSS
+    badge.classList.add('bump');
+  }
+
+  // 2. Atualiza os textos de "pts" do card sem quebrar a seleção ativa
+  const card = document.getElementById(`player-card-${p.id}`);
+  if (card) {
+    const ptsDiv = card.querySelector('.player-pts');
+    if (ptsDiv) ptsDiv.textContent = `${p.score} pt${p.score !== 1 ? 's' : ''}`;
+  }
+
+  // 3. Atualiza os status e o ranking final
+  updateStats();
+}
+
+function updateStats() {
+  const drawn = drawnIds.size;
+  const total = QUESTIONS.length;
+  const remaining = total - drawn;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-drawn').textContent = drawn;
+  document.getElementById('stat-remaining').textContent = remaining;
+  const pct = Math.round(drawn / total * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+
+  if (remaining === 0) showFinish();
+}
+
+function showFinish() {
+  document.getElementById('finish-state').style.display = 'block';
+  document.getElementById('btn-draw').disabled = true;
+
+  const sorted = [...players].sort((a, b) => b.score - a.score);
+  const top = sorted[0];
+  document.getElementById('winner-row').innerHTML =
+    `🥇 ${top.name} lidera com <span style="color:var(--gold);margin-left:6px">${top.score} ponto${top.score !== 1 ? 's' : ''}</span>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════════
+function selectPlayer(id) {
+  selectedPlayer = id;
+  renderPlayers();
+  const p = players.find(x => x.id === id);
+  document.getElementById('player-indicator').innerHTML = `Respondendo: <strong>${p.name}</strong>`;
+}
+
+function drawQuestion() {
+  if (spinning) return;
+  if (selectedPlayer === null) { toast('⚠️ Selecione um participante primeiro!'); return; }
+
+  const available = QUESTIONS.map((q, i) => ({ ...q, idx: i })).filter(q => !drawnIds.has(q.idx));
+  if (!available.length) { toast('Todas as perguntas já foram sorteadas!'); return; }
+
+  spinning = true;
+  answerRevealed = false;
+  document.getElementById('score-actions-wrap').style.display = 'none';
+  document.getElementById('btn-draw').disabled = true;
+
+  const card = document.getElementById('raffle-card');
+  const qs = document.getElementById('question-state');
+  const ws = document.getElementById('waiting-state');
+  const qText = document.getElementById('q-text');
+  const ansBtn = document.getElementById('answer-btn');
+
+  ws.style.display = 'none';
+  qs.style.display = 'block';
+  card.classList.add('has-question', 'spinning');
+  ansBtn.className = 'answer-btn';
+  ansBtn.textContent = '🔒 Clique para revelar a resposta';
+  ansBtn.onclick = revealAnswer;
+
+  let ticks = 0;
+  const maxTicks = 16 + Math.floor(Math.random() * 10);
+
+  const interval = setInterval(() => {
+    const rand = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
+    qText.textContent = rand.question;
+    ticks++;
+    if (ticks >= maxTicks) {
+      clearInterval(interval);
+      card.classList.remove('spinning');
+      const chosen = available[Math.floor(Math.random() * available.length)];
+      currentQuestion = chosen;
+      qText.textContent = chosen.question;
+      drawnIds.add(chosen.idx);
+
+      const badge = document.getElementById('points-badge');
+      badge.textContent = chosen.points === 2 ? '⭐⭐ 2 PONTOS' : '⭐ 1 PONTO';
+
+      updateStats();
+      spinning = false;
+      document.getElementById('btn-draw').disabled = false;
+    }
+  }, 85);
+}
+
+function revealAnswer() {
+  if (!currentQuestion || answerRevealed) return;
+  answerRevealed = true;
+
+  const btn = document.getElementById('answer-btn');
+  btn.className = 'answer-btn revealed';
+  btn.innerHTML = `<div class="answer-text-inner">${esc(currentQuestion.answer)}</div>`;
+  btn.onclick = null;
+
+  document.getElementById('score-actions-wrap').style.display = 'block';
+  const p = players.find(x => x.id === selectedPlayer);
+  document.getElementById('score-hint').textContent = p
+    ? `${p.name} respondeu corretamente?`
+    : 'Participante respondeu corretamente?';
+}
+
+function markCorrect() {
+  if (selectedPlayer === null || !currentQuestion) return;
+  const pts = currentQuestion.points;
+  const p = players.find(x => x.id === selectedPlayer);
+  p.score += pts;
+
+  // Fly animation
+  const btn = document.getElementById('btn-correct');
+  const rect = btn.getBoundingClientRect();
+  const fly = document.createElement('div');
+  fly.className = 'point-fly';
+  fly.textContent = `+${pts}`;
+  fly.style.left = rect.left + rect.width / 2 - 20 + 'px';
+  fly.style.top = rect.top - 10 + 'px';
+  document.body.appendChild(fly);
+  setTimeout(() => fly.remove(), 900);
+
+  // Badge bump
+  const badge = document.getElementById(`badge-${p.id}`);
+  if (badge) {
+    badge.textContent = p.score;
+    badge.classList.remove('bump');
+    void badge.offsetWidth;
+    badge.classList.add('bump');
+  }
+
+  renderPlayers();
+  document.getElementById('score-actions-wrap').style.display = 'none';
+  toast(`✓ +${pts} ponto${pts !== 1 ? 's' : ''} para ${p.name}!`);
+}
+
+function skipQuestion() {
+  document.getElementById('score-actions-wrap').style.display = 'none';
+  toast('Pergunta pulada.');
+}
+
+function resetAll() {
+  if (!confirm('Reiniciar tudo? Pontos e sorteio serão zerados.')) return;
+  drawnIds.clear();
+  players.forEach(p => p.score = 0);
+  currentQuestion = null;
+  answerRevealed = false;
+  selectedPlayer = null;
+  spinning = false;
+
+  document.getElementById('question-state').style.display = 'none';
+  document.getElementById('waiting-state').style.display = 'block';
+  document.getElementById('raffle-card').classList.remove('has-question');
+  document.getElementById('score-actions-wrap').style.display = 'none';
+  document.getElementById('player-indicator').innerHTML = 'Nenhum participante selecionado';
+  document.getElementById('finish-state').style.display = 'none';
+  document.getElementById('btn-draw').disabled = false;
+
+  renderPlayers();
+  updateStats();
+  toast('Reiniciado!');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// INIT
+renderPlayers();
+updateStats();
+</script>
+</body>
+</html>
