@@ -42,47 +42,38 @@ body {
 
 /* TOPBAR */
 .topbar {
-    background: rgb(255, 255, 255);
-    border-bottom: 2px solid var(--border); /* Linha levemente mais grossa */
-    padding: 18px 32px; /* Aumentei o espaçamento interno */
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-  }
-
-  .topbar-logo svg { height: 26px; display: block; }
-
-  .topbar-divider { width: 1px; height: 22px; background: var(--border); }
-
-  .topbar-title {
-    font-family: 'Figtree', sans-serif;
-    font-weight: 700; /* De 600 para 700 */
-    font-size: 0.85rem; /* De 0.8rem para 0.85rem */
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #18171F;
-  }
+  background: #fff;
+  border-bottom: 2px solid var(--border);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+.topbar-logo svg { height: 26px; display: block; }
+.topbar-divider { width: 1px; height: 22px; background: var(--border); }
+.topbar-title {
+  font-weight: 700; font-size: 0.85rem;
+  letter-spacing: 1.5px; text-transform: uppercase; color: #18171F;
+}
 .topbar-right { margin-left:auto; display:flex; align-items:center; gap:8px; }
 .live-dot { width:8px; height:8px; border-radius:50%; background:var(--red); animation:blink 1.5s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
 .live-label { font-size:0.65rem; font-weight:800; letter-spacing:1px; color:#aaa; text-transform:uppercase; }
 
-/* LAYOUT - Aumentado o Grid da Esquerda */
+/* LAYOUT */
 .app { max-width:1400px; margin:0 auto; padding:20px; }
-
 .main-grid {
   display:grid;
-  grid-template-columns: 400px 1fr; /* Aumentei a largura do ranking */
+  grid-template-columns: 400px 1fr;
   gap:24px;
   align-items:start;
 }
 
-/* SIDEBAR - PLACAR */
+/* SIDEBAR */
 .sidebar {
   background: var(--surface);
   border-radius: 20px;
@@ -103,78 +94,45 @@ body {
   cursor:pointer; border-radius:14px;
   transition: all 0.2s;
   border: 1px solid transparent;
-  position: relative;
 }
 .player-card:hover { background: var(--surface2); }
-.player-card.sel {
-  background: var(--red-light);
-  border-color: var(--red-border);
-}
-
-.player-card.shake {
-  animation: shake 0.4s ease-in-out;
-}
+.player-card.sel { background: var(--red-light); border-color: var(--red-border); }
+.player-card.shake { animation: shake 0.4s ease-in-out; }
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)}
 }
 
-.player-avatar {
-  width:54px; height:54px; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-}
-.player-avatar img { 
-  max-width:100%; max-height:100%; 
-  object-fit:contain;
-}
+.player-avatar { width:54px; height:54px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.player-avatar img { max-width:100%; max-height:100%; object-fit:contain; }
 
-.player-info { 
-  flex: 1; 
-  min-width: 0; /* Permite que o texto quebre ou encolha se necessário */
-}
-.player-name { 
-  font-weight:800; font-size:1.1rem; color:var(--text); 
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.player-pts  { font-size:0.85rem; color:var(--muted); font-weight:600; margin-top: 2px; }
+.player-info { flex:1; min-width:0; }
+.player-name { font-weight:800; font-size:1.1rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.player-pts  { font-size:0.85rem; color:var(--muted); font-weight:600; margin-top:2px; }
 
-/* Correção do Alinhamento do Score */
-.score-ctrl { 
-  display:flex; align-items:center; gap:8px; 
-  margin-left: auto; /* Empurra sempre para a direita de forma fixa */
-  flex-shrink: 0; /* Impede que os botões diminuam */
-}
-.score-badge { 
-  font-weight:900; font-size:1.3rem; width:45px; text-align:center; 
-  font-variant-numeric: tabular-nums; /* Mantém números com mesma largura */
-}
-.score-badge.positive { color: var(--green); }
-.score-badge.negative { color: var(--red); }
+.score-ctrl { display:flex; align-items:center; gap:8px; margin-left:auto; flex-shrink:0; }
+.score-badge { font-weight:900; font-size:1.3rem; width:45px; text-align:center; font-variant-numeric:tabular-nums; }
+.score-badge.positive { color:var(--green); }
+.score-badge.negative { color:var(--red); }
 
 .btn-adj {
   border:1px solid var(--border-strong); background:#fff; color:var(--text);
   border-radius:8px; width:28px; height:28px; cursor:pointer;
   font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center;
-  transition: 0.1s;
+  transition:0.1s;
 }
 .btn-adj:hover { background:var(--text); color:#fff; }
 
 /* FLYING POINT */
 .point-fly {
-  position: fixed;
-  font-weight: 900;
-  font-size: 2.5rem;
-  pointer-events: none;
-  z-index: 999;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  animation: flyUp 1.2s ease-out forwards;
+  position:fixed; font-weight:900; font-size:2.5rem;
+  pointer-events:none; z-index:999;
+  text-shadow:0 4px 10px rgba(0,0,0,0.1);
+  animation:flyUp 1.2s ease-out forwards;
 }
-
 @keyframes flyUp {
-  0% { opacity: 0; transform: translateY(0) scale(0.5); }
-  20% { opacity: 1; transform: translateY(-20px) scale(1.2); }
-  100% { opacity: 0; transform: translateY(-120px) scale(1); }
+  0%{opacity:0; transform:translateY(0) scale(0.5)}
+  20%{opacity:1; transform:translateY(-20px) scale(1.2)}
+  100%{opacity:0; transform:translateY(-120px) scale(1)}
 }
 
 /* CONTENT */
@@ -197,31 +155,29 @@ body {
   background:var(--surface); border:1px solid var(--border);
   border-radius:24px; overflow:hidden;
   box-shadow:0 10px 40px rgba(0,0,0,0.06);
-  display: flex; flex-direction: column;
-  height: 520px; 
+  display:flex; flex-direction:column;
+  min-height:520px;
 }
 
 .card-body {
-  flex: 1;
-  padding: 40px;
+  flex:1; padding:40px;
   display:flex; flex-direction:column; align-items:center; text-align:center;
-  overflow-y: auto;
-  justify-content: center;
+  overflow-y:auto; justify-content:center;
 }
 
 .q-text {
   font-weight:800;
-  font-size: clamp(1.5rem, 5vh, 2.2rem); 
-  line-height:1.2; color:var(--text); 
-  max-width:800px;
+  font-size:clamp(1.4rem,4vh,2rem);
+  line-height:1.25; color:var(--text);
+  max-width:800px; white-space:pre-line;
 }
 .q-text small {
-  display: block; font-size: 1.2rem; color: var(--muted);
-  font-weight: 500; margin-top: 20px; line-height: 1.5;
+  display:block; font-size:1.1rem; color:var(--muted);
+  font-weight:500; margin-top:16px; line-height:1.5;
 }
 
 /* BADGES */
-.badges-row { display:flex; align-items:center; gap:10px; margin-bottom:24px; }
+.badges-row { display:flex; align-items:center; gap:10px; margin-bottom:24px; flex-wrap:wrap; justify-content:center; }
 .badge {
   font-weight:700; font-size:0.8rem; padding:8px 16px; border-radius:30px;
   text-transform:uppercase; letter-spacing:1px;
@@ -230,30 +186,88 @@ body {
 .badge-produto  { background:var(--green-light); color:var(--green); }
 .badge-prenda   { background:var(--gold-light); color:var(--gold); }
 
+/* ALTERNATIVES */
+.alts-section { width:100%; max-width:560px; margin-top:28px; display:flex; flex-direction:column; gap:0; }
+
+.btn-show-alts {
+  background:transparent; border:2px dashed var(--border-strong);
+  border-radius:14px; color:var(--muted);
+  font-family:'Figtree', sans-serif; font-size:0.95rem; font-weight:700;
+  padding:14px 20px; cursor:pointer; transition:all 0.2s; text-align:center;
+  width:100%;
+}
+.btn-show-alts:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-light); }
+
+.alts-list {
+  display:none;
+  flex-direction:column;
+  gap:10px;
+  width:100%;
+  animation:fadeIn 0.25s ease;
+}
+.alts-list.visible { display:flex; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
+
+.alt-item {
+  display:flex; align-items:center; gap:14px;
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:12px; padding:14px 18px;
+  font-size:1rem; font-weight:600; color:var(--text2);
+  text-align:left; transition:all 0.2s;
+}
+.alt-item.correct {
+  background:var(--green-light);
+  border-color:var(--green-border);
+  color:var(--green);
+}
+.alt-item.wrong {
+  background:var(--red-light);
+  border-color:var(--red-border);
+  color:var(--muted);
+  text-decoration:line-through;
+}
+.alt-letter {
+  font-family:'Figtree', sans-serif;
+  font-weight:900; font-size:1rem;
+  width:32px; height:32px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  background:var(--border);
+  color:var(--text2);
+}
+.alt-item.correct .alt-letter { background:var(--green); color:#fff; }
+.alt-item.wrong   .alt-letter { background:rgba(0,0,0,0.08); color:var(--muted); }
+
 /* ANSWER BUTTON */
 .answer-btn {
-  margin-top: 30px; width:100%; max-width:480px; padding:20px;
+  margin-top:24px; width:100%; max-width:560px; padding:20px;
   background:var(--surface2); border:2px dashed var(--border-strong);
-  border-radius:14px; color:var(--muted); font-size:1.1rem; font-weight:700;
-  cursor:pointer; transition:all 0.2s;
+  border-radius:14px; color:var(--muted); font-size:1.05rem; font-weight:700;
+  cursor:pointer; transition:all 0.2s; font-family:'Figtree', sans-serif;
 }
+.answer-btn:hover { border-color:var(--green); color:var(--green); background:var(--green-light); }
 .answer-btn.revealed {
-  border-style:solid; border-color:var(--green-border); background:var(--green-light); 
-  color: var(--green); cursor:default;
+  border-style:solid; border-color:var(--green-border);
+  background:var(--green-light); color:var(--green); cursor:default;
+  font-size:1.15rem; line-height:1.5;
 }
 
-/* BOTTOM CONTROLS */
+/* SCORE BAR */
 .score-bar {
   display:none; align-items:center; justify-content:center; gap:16px;
   padding:24px; border-top:1px solid var(--border); background:var(--surface2);
 }
 .btn-action {
-  padding: 16px 40px; border-radius: 12px; border: none; font-weight: 800; 
-  cursor: pointer; text-transform: uppercase; font-size: 0.95rem; transition: 0.2s;
+  padding:16px 40px; border-radius:12px; border:none; font-weight:800;
+  cursor:pointer; text-transform:uppercase; font-size:0.95rem; transition:0.2s;
+  font-family:'Figtree', sans-serif;
 }
-.btn-correct { background: var(--green); color: #fff; }
-.btn-skip { background: #fff; border: 1px solid var(--border-strong); color: var(--muted); }
+.btn-correct { background:var(--green); color:#fff; }
+.btn-correct:hover { opacity:0.9; transform:translateY(-1px); }
+.btn-skip { background:#fff; border:1px solid var(--border-strong); color:var(--muted); }
+.btn-skip:hover { background:var(--surface2); }
 
+/* ACTION BAR */
 .action-bar {
   background:var(--surface); border:1px solid var(--border);
   border-radius:20px; padding:20px 24px;
@@ -263,33 +277,36 @@ body {
   background:var(--red); color:#fff; font-weight:800; font-size:1.1rem;
   padding:16px 48px; border:none; border-radius:14px; cursor:pointer;
   box-shadow:0 6px 20px rgba(232,17,45,0.3);
-  text-transform: uppercase;
+  text-transform:uppercase; font-family:'Figtree', sans-serif;
+  transition:all 0.2s;
 }
-.btn-draw:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-draw:hover { opacity:0.9; transform:translateY(-1px); }
+.btn-draw:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
-/* ANIMATIONS */
+/* SPINNING */
 @keyframes spin-anim {
-  0%{opacity:0.3; transform: scale(0.99);}
-  50%{opacity:0.7; transform: scale(1.01);}
-  100%{opacity:0.3; transform: scale(0.99);}
+  0%{opacity:0.3; transform:scale(0.99)}
+  50%{opacity:0.7; transform:scale(1.01)}
+  100%{opacity:0.3; transform:scale(0.99)}
 }
-.spinning .q-text { animation: spin-anim 0.15s infinite; }
+.spinning .q-text { animation:spin-anim 0.15s infinite; }
 
+/* TOAST */
 .toast {
   position:fixed; bottom:30px; left:50%; transform:translateX(-50%);
   background:#111; color:#fff; padding:12px 24px; border-radius:12px;
-  font-weight:600; opacity:0; pointer-events:none; transition: 0.3s; z-index: 1000;
+  font-weight:600; opacity:0; pointer-events:none; transition:0.3s; z-index:1000;
 }
 .toast.show { opacity:1; }
 
 /* PRENDA */
-.prenda-title { font-weight:800; font-size:2.5rem; color:var(--gold); margin-bottom:10px; }
+.prenda-title { font-weight:800; font-size:2.2rem; color:var(--gold); margin-bottom:10px; }
 .prenda-rules {
   background:var(--gold-light); border-radius:16px; padding:24px;
-  text-align: left; display: grid; gap: 14px; margin-top: 24px;
+  text-align:left; display:grid; gap:14px; margin-top:24px;
+  border:1px solid var(--gold-border);
 }
-.rule-item { display: flex; gap: 12px; font-weight: 700; font-size: 1.1rem; }
-
+.rule-item { display:flex; gap:12px; font-weight:700; font-size:1.05rem; line-height:1.4; }
 </style>
 </head>
 <body>
@@ -304,22 +321,27 @@ body {
   </svg>
   <div class="topbar-divider"></div>
   <div class="topbar-title">Guardiões do Clima 2026</div>
+  <div class="topbar-right">
+    <div class="live-dot"></div>
+    <div class="live-label">Ao Vivo</div>
+  </div>
 </div>
 
 <div class="app">
   <div class="main-grid">
-    <!-- Sidebar Aumentada -->
+
+    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sidebar-title">
         <span>PLACAR</span>
-        <span id="total-points-label" style="font-size: 10px; opacity: 0.6;">TEMPO REAL</span>
+        <span style="font-size:10px; opacity:0.6;">TEMPO REAL</span>
       </div>
       <div id="players-list"></div>
     </div>
 
     <div class="content">
-      <!-- Título Removido para dar mais espaço ao card -->
-      
+
+      <!-- STATS -->
       <div class="stats-bar">
         <div class="stat-item">
           <div class="stat-val" id="stat-drawn">0</div>
@@ -331,44 +353,64 @@ body {
         </div>
         <div class="prog-wrap">
           <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-          <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-weight:800; color:var(--muted); text-transform:uppercase;">
+          <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-weight:800; color:var(--muted); text-transform:uppercase; margin-top:6px;">
             <span>Progresso da Prova</span>
             <span id="pct-label">0%</span>
           </div>
         </div>
       </div>
 
+      <!-- RAFFLE CARD -->
       <div class="raffle-card" id="raffle-card">
         <div class="card-body" id="card-body">
+
+          <!-- WAITING -->
           <div id="waiting-state">
             <div style="font-size:5rem; margin-bottom:20px;">🏁</div>
-            <h2 style="font-weight:900; color:var(--text); font-size: 2.2rem; letter-spacing: -1px;">PRONTOS PARA A LARGADA?</h2>
-            <p style="color:var(--muted); font-weight:500; margin-top:15px; font-size: 1.1rem;">Selecione uma escuderia no placar e clique em sortear.</p>
+            <h2 style="font-weight:900; color:var(--text); font-size:2.2rem; letter-spacing:-1px;">PRONTOS PARA A LARGADA?</h2>
+            <p style="color:var(--muted); font-weight:500; margin-top:15px; font-size:1.1rem;">Selecione uma escuderia no placar e clique em sortear.</p>
           </div>
 
+          <!-- QUESTION STATE -->
           <div id="question-state" style="display:none; flex-direction:column; align-items:center; width:100%;">
             <div class="badges-row">
               <div class="badge" id="pillar-badge"></div>
               <div class="badge" id="pts-badge" style="background:var(--surface2); border:1px solid var(--border);"></div>
             </div>
             <div class="q-text" id="q-text"></div>
+
+            <!-- ALTERNATIVES (hidden by default) -->
+            <div class="alts-section" id="alts-section" style="display:none;">
+              <button class="btn-show-alts" id="btn-show-alts" onclick="showAlternatives()">
+                🔤 Ver alternativas
+              </button>
+              <div class="alts-list" id="alts-list"></div>
+            </div>
+
+            <!-- ANSWER BUTTON (for questions) -->
             <button class="answer-btn" id="answer-btn" onclick="revealAnswer()">
               VER RESPOSTA
             </button>
           </div>
+
         </div>
+
+        <!-- SCORE BAR -->
         <div class="score-bar" id="score-bar">
           <button class="btn-action btn-skip" onclick="skipQ()">PANE SECA (Errou)</button>
           <button class="btn-action btn-correct" onclick="markCorrect()">ACELEROU! (Pontuou) ✓</button>
         </div>
       </div>
 
+      <!-- ACTION BAR -->
       <div class="action-bar">
-        <div style="flex:1; font-weight:700; color:var(--muted); font-size: 1.1rem;" id="player-indicator">
+        <div style="flex:1; font-weight:700; color:var(--muted); font-size:1.1rem;" id="player-indicator">
           Aguardando piloto...
         </div>
+        <button onclick="resetAll()" style="background:none; border:1px solid var(--border-strong); color:var(--muted); padding:12px 20px; border-radius:10px; cursor:pointer; font-weight:700; font-size:0.85rem; margin-right:8px;">↺ Reiniciar</button>
         <button class="btn-draw" id="btn-draw" onclick="drawQuestion()">SORTEAR</button>
       </div>
+
     </div>
   </div>
 </div>
@@ -376,31 +418,157 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-const QUESTIONS = [
-  { q:"Qual o nome do programa de incentivo educacional da Webmotors?", a:"Flexlearning", pillar:"Cultura" },
-  { q:"Qual a quantidade de pessoas ativas hoje na diretoria de produtos?", a:"[Número Atual]", pillar:"Cultura" },
-  { q:"Qual será o próximo lançamento de Webmotors Serviços?", a:"Blindagem / Concierge de Blindagem", pillar:"Cultura" },
-  { q:"Qual marca de moto teve pré-lançamento com O&M em março de 2026?", a:"Honda", pillar:"Cultura" },
-  { q:"Quais países a CarGroup está presente?", a:"Austrália, Coreia do Sul, USA, Chile e Brasil", pillar:"Cultura" },
-  { q:"Qual a cor do bairro onde fica o estúdio WM?", a:"Verde", pillar:"Cultura" },
-  { q:"Qual foi o ano em que a Webmotors passou a fazer parte da CarGroup?", a:"2013", pillar:"Cultura" },
-  { q:'No "Vender", temos os planos: Premium, Plus e Economic. Categorize do mais adotado para o menos adotado em 2025.', a:"1º Premium → 2º Plus → 3º Economic", pillar:"Produto" },
-  { q:"Eu moro dentro do Databricks, entendo linguagem natural e sei responder quantos leads PJ tivemos no último mês. Quem sou eu?", a:"Genie", pillar:"Produto" },
-  { q:"Qual foi o NPS da universidade Webmotors em fevereiro de 2026?", a:"98", pillar:"Produto" },
-  { q:'Preencha o gap: "Todos os ________ te levam a Webmotors."', a:"Caminhos", pillar:"Produto" },
-  { q:"Quais são os tipos de cobrança dos produtos PJ na Webmotors no último mês?", a:"Preço fixo e Pró-rata", pillar:"Produto" },
-  { q:"Qual o veículo mais anunciado na Webmotors no último ano?", a:"Chevrolet Onix", pillar:"Produto" },
-  { q:"Qual a meta de leads PJ em abril?", a:"[Meta de Abril]", pillar:"Produto" },
-  { pillar:"Prenda", type:"prenda", emoji:"🎭", title:"Passa a Prenda!", sub:"Coreografia de Single Ladies (Beyoncé).", rules:[{i:"🎯",t:"Escolha outro time para fazer a coreografia."},{i:"✅",t:"Se cumprirem: +1 ponto para eles."}], pts:1 },
+var QUESTIONS = [
+  {
+    q: "O que é o Helpmotors?",
+    a: "Ferramenta de IA de suporte virtual para os colaboradores.",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"Um canal de atendimento exclusivo para lojistas Premium", correct:false },
+      { letter:"B", text:"Ferramenta de IA de suporte virtual para os colaboradores.", correct:true },
+      { letter:"C", text:"Um programa de cashback para anunciantes", correct:false }
+    ]
+  },
+  {
+    q: 'No "Vender", temos os planos: Premium, Plus e Economic.\nCategorize do mais adotado para o menos adotado em 2025.',
+    a: "1º Premium → 2º Plus → 3º Economic",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"Plus → Premium → Economic", correct:false },
+      { letter:"B", text:"Premium → Plus → Economic", correct:true },
+      { letter:"C", text:"Economic → Plus → Premium", correct:false }
+    ]
+  },
+  {
+    q: "Eu moro dentro do Databricks, entendo linguagem natural e sei responder quantos leads PJ tivemos no último mês. Quem sou eu?",
+    a: "Genie",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"Um dashboard padrão do Power BI", correct:false },
+      { letter:"B", text:"Um analista de dados da Webmotors", correct:false },
+      { letter:"C", text:"Genie", correct:true }
+    ]
+  },
+  {
+    q: "Qual foi o NPS (satisfação com o curso) da Universidade Webmotors em fevereiro de 2026?",
+    a: "98",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"92", correct:false },
+      { letter:"B", text:"78", correct:false },
+      { letter:"C", text:"98", correct:true }
+    ]
+  },
+  {
+    q: "Qual evento, ligado ao universo automotivo infantil, será patrocinado pela Webmotors em julho?",
+    a: "Hot Wheels City Experience",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"Hot Wheels City Experience", correct:true },
+      { letter:"B", text:"Salãozinho do Automóvel Kids", correct:false },
+      { letter:"C", text:"Carros Disney", correct:false }
+    ]
+  },
+  {
+    q: "Qual foi o veículo mais anunciado na Webmotors no último mês?",
+    a: "Chevrolet Onix",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"Chevrolet Onix", correct:true },
+      { letter:"B", text:"Fiat Strada", correct:false },
+      { letter:"C", text:"HB20", correct:false }
+    ]
+  },
+  {
+    q: "Quais são os 4 pilares da estratégia Webmotors?",
+    a: "Fortalecer nosso core · Expandir nossos marketplaces · Diversificar e crescer · Excelência operacional",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"Audiência, Tecnologia, Monetização e Marca", correct:false },
+      { letter:"B", text:"Usuário, Anunciante, Produto e Performance", correct:false },
+      { letter:"C", text:"Fortalecer nosso core, expandir marketplaces, diversificar e crescer, excelência operacional", correct:true }
+    ]
+  },
+  {
+    q: "Qual a quantidade de pessoas ativas hoje na diretoria de produtos?",
+    a: "71 pessoas",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"47 pessoas", correct:false },
+      { letter:"B", text:"62 pessoas", correct:false },
+      { letter:"C", text:"71 pessoas", correct:true }
+    ]
+  },
+  {
+    q: "Qual o resultado de leads PJ em março?",
+    a: "1.143.389 leads",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"1.141.389 leads", correct:false },
+      { letter:"B", text:"1.145.389 leads", correct:false },
+      { letter:"C", text:"1.143.389 leads", correct:true }
+    ]
+  },
+  {
+    q: "Qual será o próximo lançamento de WMS?",
+    a: "Blindagem / Concierge de Blindagem",
+    pillar: "Produto",
+    alts: [
+      { letter:"A", text:"Marketplace de peças", correct:false },
+      { letter:"B", text:"Gestão de estoque inteligente", correct:false },
+      { letter:"C", text:"Blindagem / Concierge de blindagem", correct:true }
+    ]
+  },
+  {
+    q: "Qual marca de moto teve pré-lançamento com O&M em março de 2026?",
+    a: "Honda",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"Yamaha", correct:false },
+      { letter:"B", text:"Honda", correct:true },
+      { letter:"C", text:"Kawasaki", correct:false }
+    ]
+  },
+  {
+    q: "Em quais países a CarGroup está presente?",
+    a: "Austrália, Coreia do Sul, EUA, Chile e Brasil",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"Brasil, México e Argentina", correct:false },
+      { letter:"B", text:"Brasil, Chile, Colômbia e México", correct:false },
+      { letter:"C", text:"Austrália, Coreia do Sul, EUA, Chile e Brasil", correct:true }
+    ]
+  },
+  {
+    q: "Qual o nome do design system da Webmotors?",
+    a: "Eleanor",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"Velocity", correct:false },
+      { letter:"B", text:"Torque", correct:false },
+      { letter:"C", text:"Eleanor", correct:true }
+    ]
+  },
+  {
+    q: "Quando foi lançado o Instagram de WMS?",
+    a: "Outubro de 2025",
+    pillar: "Cultura",
+    alts: [
+      { letter:"A", text:"Dezembro de 2026", correct:false },
+      { letter:"B", text:"Outubro de 2025", correct:true},
+      { letter:"C", text:"Novembro de 2025", correct:false}
+    ]
+  },
+  { pillar:"Prenda", type:"prenda", emoji:"🎭", title:"Passa a Prenda!", sub:"Coreografia de Single Ladies (Beyoncé).", rules:[{i:"🎯",t:"Escolha outro time para fazer a coreografia."},{i:"✅",t:"Se cumprirem: +1 ponto para o time desafiado."},{i:"🏆",t:"Se não cumprirem: +1 ponto para o seu time."}], pts:1 },
   { pillar:"Prenda", type:"prenda", emoji:"😱", title:"Azar do Motorista!", sub:"Seu time perde 2 pontos imediatamente.", rules:[{i:"💀",t:"O time que sorteou perde 2 pontos agora."}], pts:-2 },
   { pillar:"Prenda", type:"prenda", emoji:"📡", title:"Radar de Pontos", sub:"Retire 1 ponto de outro time.", rules:[{i:"📡",t:"Escolha um adversário para perder 1 ponto."}], pts:0 },
-  { pillar:"Prenda", type:"prenda", emoji:"🚗", title:"Marea Turbo", sub:"Tente vender esse clássico em até 1 minuto.", rules:[{i:"🎤",t:"Seja criativo no argumento de venda!"},{i:"👏",t:"Se aprovado: +3 pontos."}], pts:3 },
-  { pillar:"Prenda", type:"prenda", emoji:"🤫", title:"Mímica Automotiva", sub:"Mímica de uma marca de carro.", rules:[{i:"🕐",t:"Time tem 30 segundos para adivinhar."},{i:"✅",t:"Acertou: +2 pontos."}], pts:2 },
-  { pillar:"Prenda", type:"prenda", emoji:"🧩", title:"Carro Humano", sub:"Montem um carro usando os integrantes.", rules:[{i:"🧩",t:"Cada pessoa é uma peça."},{i:"✅",t:"Aprovado: +3 pontos."}], pts:3 },
-  { pillar:"Prenda", type:"prenda", emoji:"🎬", title:"Teatro de Valores", sub:"Encene um valor da Webmotors.", rules:[{i:"🎭",t:"Se outro time adivinhar: +1 para ambos."}], pts:1 }
+  { pillar:"Prenda", type:"prenda", emoji:"🚗", title:"Desafio do Vendedor: MAREA TURBO", sub:"Tente vender esse clássico em até 1 minuto.", rules:[{i:"🎤",t:"Vale rima, comercial ou teatro — seja criativo!"},{i:"👏",t:"Se a plateia aprovar: +3 pontos."}], pts:3 },
+  { pillar:"Prenda", type:"prenda", emoji:"🤫", title:"Mímica Automotiva", sub:"Um integrante faz mímica de uma marca de carro.", rules:[{i:"🕐",t:"O restante do time tem 30 segundos para adivinhar."},{i:"✅",t:"Se acertarem: +2 pontos."}], pts:2 },
+  { pillar:"Prenda", type:"prenda", emoji:"📸", title:"Carro Humano", sub:"Montem um carro usando os integrantes do time.", rules:[{i:"🧩",t:"Cada pessoa representa uma peça do carro."},{i:"✅",t:"Se aprovado pelo mediador: +3 pontos."}], pts:3 },
+  { pillar:"Prenda", type:"prenda", emoji:"🎬", title:"Teatro de Valores", sub:"Encene um valor da Webmotors em até 30 segundos.", rules:[{i:"🎭",t:"Se outro time adivinhar: +1 ponto para ambos."},{i:"❌",t:"Se ninguém adivinhar: seu time perde 1 ponto."}], pts:1 }
 ];
 
-const TEAMS = [
+var TEAMS = [
   { name:"SENNA",      url:"https://s7d1.scene7.com/is/image/Targetwebmotors/casa-senna?fmt=png-alpha&hei=150" },
   { name:"VETTEL",     url:"https://s7d1.scene7.com/is/image/Targetwebmotors/casa-vettel?fmt=png-alpha&hei=150" },
   { name:"LAUDA",      url:"https://s7d1.scene7.com/is/image/Targetwebmotors/casa-lauda?fmt=png-alpha&hei=150" },
@@ -410,88 +578,87 @@ const TEAMS = [
   { name:"NORIS",      url:"https://s7d1.scene7.com/is/image/Targetwebmotors/casa-noris?fmt=png-alpha&hei=150" }
 ];
 
-let players = TEAMS.map((t,i) => ({id:i, name:t.name, url:t.url, score:0}));
-let drawn = {};
-let drawnCount = 0;
-let selPlayer = null;
-let currentQ = null;
-let isSpinning = false;
+var players    = TEAMS.map(function(t,i){ return {id:i, name:t.name, url:t.url, score:0}; });
+var drawn      = {};
+var drawnCount = 0;
+var selPlayer  = null;
+var currentQ   = null;
+var isSpinning = false;
 
 function renderPlayers() {
-  const list = document.getElementById('players-list');
-  list.innerHTML = players.map(p => {
-    const scoreClass = p.score >= 0 ? 'positive' : 'negative';
-    return `
-      <div class="player-card ${selPlayer === p.id ? 'sel' : ''}" onclick="selectPlayer(${p.id})" id="p-card-${p.id}">
-        <div class="player-avatar"><img src="${p.url}" alt="${p.name}"></div>
-        <div class="player-info">
-          <div class="player-name">${p.name}</div>
-          <div class="player-pts">${p.score} pts</div>
-        </div>
-        <div class="score-ctrl" onclick="event.stopPropagation()">
-          <button class="btn-adj" onclick="adj(${p.id},-1, event)">−</button>
-          <div class="score-badge ${scoreClass}">${p.score}</div>
-          <button class="btn-adj" onclick="adj(${p.id},1, event)">+</button>
-        </div>
-      </div>
-    `;
-  }).join('');
+  var html = '';
+  for (var i = 0; i < players.length; i++) {
+    var p = players[i];
+    var sc = p.score >= 0 ? 'positive' : 'negative';
+    var selCls = selPlayer === p.id ? ' sel' : '';
+    html += '<div class="player-card' + selCls + '" id="p-card-' + p.id + '" onclick="selectPlayer(' + p.id + ')">' +
+      '<div class="player-avatar"><img src="' + p.url + '" alt="' + p.name + '"></div>' +
+      '<div class="player-info">' +
+        '<div class="player-name">' + p.name + '</div>' +
+        '<div class="player-pts">' + p.score + ' pts</div>' +
+      '</div>' +
+      '<div class="score-ctrl" onclick="event.stopPropagation()">' +
+        '<button class="btn-adj" onclick="adj(' + p.id + ',-1,event)">−</button>' +
+        '<div class="score-badge ' + sc + '">' + p.score + '</div>' +
+        '<button class="btn-adj" onclick="adj(' + p.id + ',1,event)">+</button>' +
+      '</div>' +
+    '</div>';
+  }
+  document.getElementById('players-list').innerHTML = html;
 }
 
 function selectPlayer(id) {
   selPlayer = id;
-  document.getElementById('player-indicator').innerHTML = `Piloto: <strong style="color:var(--red)">${players[id].name}</strong>`;
+  document.getElementById('player-indicator').innerHTML =
+    'Piloto: <strong style="color:var(--red)">' + players[id].name + '</strong>';
   renderPlayers();
-}
-
-function triggerFlyPoint(x, y, val) {
-  const fly = document.createElement('div');
-  fly.className = 'point-fly';
-  fly.textContent = val > 0 ? `+${val}` : val;
-  fly.style.color = val > 0 ? 'var(--green)' : 'var(--red)';
-  fly.style.left = `${x}px`;
-  fly.style.top = `${y}px`;
-  document.body.appendChild(fly);
-  setTimeout(() => fly.remove(), 1200);
-}
-
-function triggerShake(id) {
-  const el = document.getElementById(`p-card-${id}`);
-  if (el) {
-    el.classList.add('shake');
-    setTimeout(() => el.classList.remove('shake'), 400);
-  }
 }
 
 function adj(id, v, event) {
   players[id].score += v;
-  let x, y;
-  if (event && event.clientX) {
-    x = event.clientX; y = event.clientY;
-  } else {
-    const rect = document.getElementById(`p-card-${id}`).getBoundingClientRect();
+  var x, y;
+  if (event && event.clientX) { x = event.clientX; y = event.clientY; }
+  else {
+    var rect = document.getElementById('p-card-' + id).getBoundingClientRect();
     x = rect.left + rect.width / 2; y = rect.top + rect.height / 2;
   }
-  triggerFlyPoint(x, y, v);
-  if (v < 0) triggerShake(id);
+  flyPoint(x, y, v);
+  if (v < 0) shake(id);
   renderPlayers();
 }
 
+function flyPoint(x, y, val) {
+  var el = document.createElement('div');
+  el.className = 'point-fly';
+  el.textContent = val > 0 ? '+' + val : '' + val;
+  el.style.color = val > 0 ? 'var(--green)' : 'var(--red)';
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  document.body.appendChild(el);
+  setTimeout(function(){ el.parentNode && el.parentNode.removeChild(el); }, 1200);
+}
+
+function shake(id) {
+  var el = document.getElementById('p-card-' + id);
+  if (!el) return;
+  el.classList.add('shake');
+  setTimeout(function(){ el.classList.remove('shake'); }, 400);
+}
+
 function updateStats() {
-  const total = QUESTIONS.length;
-  const pct = Math.round((drawnCount / total) * 100);
+  var total = QUESTIONS.length;
+  var pct = Math.round(drawnCount / total * 100);
   document.getElementById('stat-drawn').textContent = drawnCount;
-  document.getElementById('stat-left').textContent = total - drawnCount;
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('pct-label').textContent = pct + '%';
+  document.getElementById('stat-left').textContent  = total - drawnCount;
+  document.getElementById('prog-fill').style.width  = pct + '%';
+  document.getElementById('pct-label').textContent  = pct + '%';
 }
 
 function drawQuestion() {
-  if (isSpinning || selPlayer === null) {
-    if (selPlayer === null) showToast('Selecione uma escuderia primeiro!');
-    return;
-  }
-  const avail = QUESTIONS.map((_, i) => i).filter(i => !drawn[i]);
+  if (isSpinning) return;
+  if (selPlayer === null) { showToast('Selecione uma escuderia primeiro!'); return; }
+
+  var avail = [];
+  for (var i = 0; i < QUESTIONS.length; i++) { if (!drawn[i]) avail.push(i); }
   if (!avail.length) { showToast('Bandeirada final! Todas as perguntas foram feitas.'); return; }
 
   isSpinning = true;
@@ -499,19 +666,22 @@ function drawQuestion() {
   document.getElementById('waiting-state').style.display = 'none';
   document.getElementById('question-state').style.display = 'flex';
   document.getElementById('score-bar').style.display = 'none';
-  
-  const body = document.getElementById('card-body');
+  document.getElementById('alts-section').style.display = 'none';
+  document.getElementById('alts-list').className = 'alts-list';
+  document.getElementById('btn-show-alts').style.display = 'block';
+
+  var body = document.getElementById('card-body');
   body.classList.add('spinning');
 
-  let ticks = 0;
-  const iv = setInterval(() => {
-    const r = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
-    document.getElementById('q-text').textContent = (r.q || r.title).split('\n')[0];
+  var ticks = 0;
+  var iv = setInterval(function() {
+    var r = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
+    document.getElementById('q-text').textContent = (r.q || r.title || '').split('\n')[0];
     ticks++;
-    if (ticks > 15) {
+    if (ticks > 18) {
       clearInterval(iv);
       body.classList.remove('spinning');
-      const idx = avail[Math.floor(Math.random() * avail.length)];
+      var idx = avail[Math.floor(Math.random() * avail.length)];
       drawn[idx] = true;
       drawnCount++;
       currentQ = QUESTIONS[idx];
@@ -523,48 +693,111 @@ function drawQuestion() {
 }
 
 function renderQuestion(q) {
-  const isPrenda = q.type === 'prenda';
-  const textEl = document.getElementById('q-text');
-  const pill = document.getElementById('pillar-badge');
-  const pts = document.getElementById('pts-badge');
-  const ansBtn = document.getElementById('answer-btn');
+  var isPrenda = q.type === 'prenda';
+  var textEl  = document.getElementById('q-text');
+  var pill    = document.getElementById('pillar-badge');
+  var ptsEl   = document.getElementById('pts-badge');
+  var ansBtn  = document.getElementById('answer-btn');
+  var altsSection = document.getElementById('alts-section');
 
   pill.textContent = q.pillar;
-  pill.className = 'badge badge-' + q.pillar.toLowerCase();
-  
+  pill.className   = 'badge badge-' + q.pillar.toLowerCase();
+
+  // Reset answer btn
+  ansBtn.className = 'answer-btn';
+  ansBtn.onclick   = revealAnswer;
+  ansBtn.textContent = 'VER RESPOSTA';
+
   if (isPrenda) {
-    pts.textContent = q.pts > 0 ? `ATÉ +${q.pts} PTS` : (q.pts < 0 ? `${q.pts} PTS` : 'BÔNUS');
-    textEl.innerHTML = `
-      <div class="prenda-title">${q.emoji} ${q.title}</div>
-      <div style="font-weight:600; color:var(--text2); margin-bottom:15px; font-size:1.3rem;">${q.sub}</div>
-      <div class="prenda-rules">
-        ${q.rules.map(r => `<div class="rule-item"><span>${r.i}</span><span>${r.t}</span></div>`).join('')}
-      </div>
-    `;
+    ptsEl.textContent = q.pts > 0 ? 'ATÉ +' + q.pts + ' PTS' : (q.pts < 0 ? q.pts + ' PTS' : 'ESPECIAL');
+    var rulesHtml = q.rules.map(function(r){ return '<div class="rule-item"><span>' + r.i + '</span><span>' + r.t + '</span></div>'; }).join('');
+    textEl.innerHTML =
+      '<div class="prenda-title">' + q.emoji + ' ' + q.title + '</div>' +
+      '<div style="font-weight:600; color:var(--text2); margin-bottom:15px; font-size:1.2rem;">' + q.sub + '</div>' +
+      '<div class="prenda-rules">' + rulesHtml + '</div>';
+
+    altsSection.style.display = 'none';
     ansBtn.style.display = 'none';
     document.getElementById('score-bar').style.display = 'flex';
-    if (q.pts < 0) setTimeout(() => adj(selPlayer, q.pts), 800);
+
+    if (q.pts < 0) {
+      setTimeout(function(){ adj(selPlayer, q.pts); }, 800);
+    }
+
   } else {
-    pts.textContent = '1 PONTO';
-    const lines = q.q.split('\n');
-    textEl.innerHTML = lines[0] + (lines[1] ? `<small>${lines.slice(1).join('\n')}</small>` : '');
+    ptsEl.textContent = '1 PONTO';
+    var lines = q.q.split('\n');
+    textEl.innerHTML = lines[0] + (lines[1] ? '<small>' + lines.slice(1).join('\n') + '</small>' : '');
+
     ansBtn.style.display = 'block';
-    ansBtn.className = 'answer-btn';
-    ansBtn.textContent = 'VER RESPOSTA';
+    document.getElementById('score-bar').style.display = 'none';
+
+    // Set up alternatives if they exist
+    if (q.alts && q.alts.length) {
+      altsSection.style.display = 'flex';
+      altsSection.style.flexDirection = 'column';
+      altsSection.style.gap = '12px';
+
+      // Build alts HTML (hidden)
+      var altsHtml = '';
+      for (var i = 0; i < q.alts.length; i++) {
+        var alt = q.alts[i];
+        altsHtml += '<div class="alt-item" data-correct="' + alt.correct + '">' +
+          '<div class="alt-letter">' + alt.letter + '</div>' +
+          '<div>' + alt.text + '</div>' +
+        '</div>';
+      }
+      document.getElementById('alts-list').innerHTML = altsHtml;
+      document.getElementById('alts-list').className = 'alts-list'; // hidden
+      document.getElementById('btn-show-alts').style.display = 'block';
+      document.getElementById('btn-show-alts').textContent = '🔤 Ver alternativas';
+    } else {
+      altsSection.style.display = 'none';
+    }
   }
+
   updateStats();
 }
 
+function showAlternatives() {
+  var btn  = document.getElementById('btn-show-alts');
+  var list = document.getElementById('alts-list');
+  list.className = 'alts-list visible';
+  btn.style.display = 'none';
+}
+
 function revealAnswer() {
-  const btn = document.getElementById('answer-btn');
+  var btn = document.getElementById('answer-btn');
   btn.className = 'answer-btn revealed';
   btn.textContent = currentQ.a;
+  btn.onclick = null;
   document.getElementById('score-bar').style.display = 'flex';
+
+  // Also reveal correct/wrong styling on alternatives if visible
+  var items = document.querySelectorAll('.alt-item');
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].getAttribute('data-correct') === 'true') {
+      items[i].className = 'alt-item correct';
+      var letter = items[i].querySelector('.alt-letter');
+      if (letter) letter.style.background = 'var(--green)';
+    } else {
+      items[i].className = 'alt-item wrong';
+    }
+  }
+  // If alternatives weren't shown yet, show them now with correct/wrong styling
+  var list = document.getElementById('alts-list');
+  if (list && !list.classList.contains('visible')) {
+    list.className = 'alts-list visible';
+    document.getElementById('btn-show-alts').style.display = 'none';
+  }
 }
 
 function markCorrect() {
-  const val = currentQ.type === 'prenda' ? Math.max(0, currentQ.pts || 0) : 1;
-  if (val > 0) adj(selPlayer, val);
+  var val = currentQ.type === 'prenda' ? Math.max(0, currentQ.pts || 0) : 1;
+  if (val > 0) {
+    var rect = document.getElementById('p-card-' + selPlayer).getBoundingClientRect();
+    adj(selPlayer, val, { clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 });
+  }
   document.getElementById('score-bar').style.display = 'none';
   showToast('Ponto computado!');
 }
@@ -575,9 +808,13 @@ function skipQ() {
 }
 
 function showToast(m) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = m; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+function resetAll() {
+  if (confirm('Reiniciar o jogo? Todos os pontos e perguntas serão zerados.')) location.reload();
 }
 
 renderPlayers();
